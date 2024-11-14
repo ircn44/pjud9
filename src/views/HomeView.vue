@@ -1,5 +1,5 @@
 <template>
-  <v-main :style="{ minHeight: '100vh', backgroundImage: `url(/asdf.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center' }">
+ <v-main :style="{ minHeight: '100vh', backgroundImage: `url(${require('@/assets/asdf.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
     <v-container fluid class="d-flex align-center justify-center fill-height">
       <v-row class="w-100 d-flex align-center justify-center">
         <v-col cols="12" class="d-flex justify-center my-4">
