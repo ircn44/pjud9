@@ -107,7 +107,8 @@ export default {
         'Téngase presente',
         'Téngase por acompañado',
         'Téngase presente y por acompañado',
-        'Como se pide'
+        'Como se pide',
+        'No ha lugar'
       ],
       otrosiLabels: [
         'Al primer otrosí', 'Al segundo otrosí', 'Al tercer otrosí', 'Al cuarto otrosí', 'Al quinto otrosí',
@@ -213,6 +214,7 @@ export default {
         if (option === 'Téngase por acompañado') return `${boldLabel}: téngase por acompañado, con citación`;
         if (option === 'Téngase presente y por acompañado') return `${boldLabel}: téngase presente y por acompañado, con citación`;
         if (option === 'Como se pide') return `${boldLabel}: como se pide`;
+        if (option === 'No ha lugar') return `${boldLabel}: no ha lugar`;
       }
       return '';
     },

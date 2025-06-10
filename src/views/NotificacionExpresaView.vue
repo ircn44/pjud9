@@ -151,7 +151,6 @@
 </template>
 
 <script>
-// El script permanece igual que en la versión anterior
 export default {
   name: 'NotificacionExpresaView',
   data() {
@@ -181,9 +180,11 @@ export default {
   },
   computed: {
     formattedFechaResolucionPrincipal() {
+      // Usar formatDateToDisplay para mostrar la fecha de forma legible
       return this.formatDateToDisplay(this.fechaResolucionPrincipal);
     },
     formattedFechaDocumentoNotificado() {
+      // Usar formatDateToDisplay para mostrar la fecha de forma legible
       return this.formatDateToDisplay(this.fechaDocumentoNotificado);
     },
     generatedResolution() {
@@ -192,11 +193,9 @@ export default {
         : 'XXXX de XXXX de XXXX';
       const folioPrincipalStr = this.folioResolucionPrincipal || 'XXX';
 
-      // this.parteNotificada ya estará en minúscula si se selecciona.
       const parteStr = this.parteNotificada || 'XXXXX'; 
       
       let tipoDocStr = 'XXXXX';
-      // this.tipoDocumentoNotificado ya estará en minúscula.
       if (this.tipoDocumentoNotificado === 'prueba') {
         tipoDocStr = 'resolución que recibe la causa a prueba';
       } else if (this.tipoDocumentoNotificado === 'sentencia') {
@@ -212,7 +211,7 @@ export default {
       resolution += `Como se pide, téngase por expresamente notificada a la parte ${parteStr} de la ${tipoDocStr} de fecha ${fechaDocNotificadoStr} a folio ${folioDocNotificadoStr}, con la fecha de inclusión de la presente resolución en el estado diario.`;
 
       if (this.tipoDocumentoNotificado === 'sentencia') {
-        resolution += `\n\nSe hace presente que la sentencia estará disponible para su visualización una vez notificadas a todas las partes.`;
+        resolution += `\n\nSe hace presente que la sentencia estará disponible para su visualización en el sistema una vez notificadas a todas las partes.`;
       }
       
       if (!this.fechaResolucionPrincipal && !this.folioResolucionPrincipal && !this.parteNotificada && !this.tipoDocumentoNotificado && !this.fechaDocumentoNotificado && !this.folioDocumentoNotificado) {
@@ -223,20 +222,30 @@ export default {
     },
   },
   methods: {
-    // ... (métodos formatDateToDisplay, formatDateToLong, borrarCampos, copyToClipboard sin cambios) ...
+    // MODIFICACIÓN CRÍTICA:
+    // Esta función asegura que el objeto Date se interprete en la zona horaria local
+    // y devuelva la fecha en formato YYYY-MM-DD sin problemas de offset.
     formatDateToDisplay(date) {
       if (!date) return null;
+      // Convertir a un objeto Date si no lo es (v-date-picker a veces devuelve strings)
       const d = new Date(date);
-      const offset = d.getTimezoneOffset();
-      const localDate = new Date(d.getTime() - (offset*60*1000));
-      return localDate.toISOString().split('T')[0];
+      // Obtener el año, mes y día de forma local
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0'); // Meses son 0-indexados
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
     },
+
+    // MODIFICACIÓN CRÍTICA:
+    // Esta función formatea la fecha para el texto de la resolución
+    // asegurando que se muestre el día correcto en la zona horaria local.
     formatDateToLong(date) {
       if (!date) return 'XXXX de XXXX de XXXX';
+      // Convertir a un objeto Date si no lo es
       const d = new Date(date);
-      const offset = d.getTimezoneOffset();
-      const localDate = new Date(d.getTime() - (offset*60*1000));
-      return localDate.toLocaleDateString('es-ES', {
+      // Usar toLocaleDateString sin modificar el objeto Date original
+      // para que tome la zona horaria local por defecto.
+      return d.toLocaleDateString('es-ES', {
         day: 'numeric',
         month: 'long',
         year: 'numeric',

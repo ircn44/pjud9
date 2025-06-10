@@ -51,7 +51,7 @@
           <h2 class="mb-4 text-h5">Texto del oficio</h2>
           
           <div ref="oficioText" class="resolucion-texto-scrollable mb-4">
-            <p class="resolucion-texto mb-3"><strong>Resolviendo presentación de fecha [FECHA] de [MES] de [AÑO] a folio [FOLIO]:</strong></p>
+            <p class="resolucion-texto mb-3"><strong>Resolviendo presentación de fecha XXXXX de XXXXX de XXXXXX a folio XXXXX:</strong></p>
             
             <div v-if="instituciones.length === 0" class="text-center grey--text" style="color: #9E9E9E !important;">
               <p>Selecciona una institución.</p>
@@ -157,7 +157,7 @@ export default {
       } else if (institucion === 'Carabineros') {
         texto = `Respecto al oficio solicitado para la Dirección General de Carabineros y Comisaría Virtual, y perteneciendo éstas a Carabineros de Chile, y por usar la misma de base de datos que el Registro Civil, no ha lugar por innecesario.`;
       } else if (institucion === 'Otros') {
-        texto = `Con respecto a los oficios solicitados a XXXXX, careciendo de interconexión, y no correspondiendo a una institución que entregue información sobre domicilios, no ha lugar.`;
+        texto = `Con respecto a los oficios solicitados a las demás instituciones, no ha lugar.`;
       }
       return texto;
     },
